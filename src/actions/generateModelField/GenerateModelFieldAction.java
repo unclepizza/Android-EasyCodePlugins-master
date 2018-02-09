@@ -53,10 +53,10 @@ public class GenerateModelFieldAction extends AnAction {
         }
     }
 
-    @NotNull
     /**
      * 把粘贴的字符串分行按空格转换成列表
      */
+    @NotNull
     private List<List<String>> convertToList(String str) {
         List<List<String>> modelList = new ArrayList<>();
         String[] lines = str.split("\n");

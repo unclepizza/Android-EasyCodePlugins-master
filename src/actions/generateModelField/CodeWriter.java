@@ -31,7 +31,7 @@ public class CodeWriter {
      */
     private ISpliceField spliceHelper = new ZtSpliceHelper();
 
-    public String write(AnActionEvent event, List<List<String>> list, String type, boolean isSerializable) {
+    String write(AnActionEvent event, List<List<String>> list, String type, boolean isSerializable) {
         //获取当前编辑的文件
         PsiFile psiFile = event.getData(LangDataKeys.PSI_FILE);
         if (psiFile == null) {

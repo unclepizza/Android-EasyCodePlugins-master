@@ -4,13 +4,19 @@ import javax.swing.*;
 import java.awt.event.*;
 
 public class GenerateJavaBeanDialog extends JDialog {
+    private JButton btnCancel;
     private JPanel contentPane;
     private JButton btnGenerate;
-    private JButton btnCancel;
     private JTextField textField1;
-    private JTextArea txtPasteHere;
     private JTextField textField2;
+    private JRadioButton rbPublic;
+    private JRadioButton rbPrivate;
+    private JTextArea txtPasteHere;
     private JCheckBox cbSerializable;
+    private OnClickListener onClickListener;
+
+    private boolean serializable;
+    private String memberType = "private";
 
     public GenerateJavaBeanDialog() {
         setContentPane(contentPane);
@@ -19,47 +25,48 @@ public class GenerateJavaBeanDialog extends JDialog {
 
         btnGenerate.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                onOK();
+                onClickListener.onGenerate(txtPasteHere.getText(), memberType, serializable);
+                dispose();
             }
         });
 
         btnCancel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                onCancel();
+                onClickListener.onCancel();
+                dispose();
             }
         });
 
-        // call onCancel() when cross is clicked
-        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent e) {
-                onCancel();
+        rbPublic.addChangeListener(e -> {
+            if (rbPublic.isSelected()) {
+                memberType = "public";
+                rbPrivate.setSelected(!rbPublic.isSelected());
             }
         });
 
-        // call onCancel() on ESCAPE
-        contentPane.registerKeyboardAction(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
+        rbPrivate.addChangeListener(e -> {
+            if (rbPrivate.isSelected()) {
+                rbPublic.setSelected(!rbPrivate.isSelected());
+                memberType = "private";
             }
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        });
+
+        cbSerializable.addChangeListener(e -> {
+            this.serializable = cbSerializable.isSelected();
+        });
     }
 
-    private void onOK() {
-        // add your code here
-        dispose();
+    public interface OnClickListener {
+        void onGenerate(String str, String member, boolean serializable);
+
+        void onCancel();
     }
 
-    private void onCancel() {
-        // add your code here if necessary
-        dispose();
+    public void setOnClickListener(GenerateJavaBeanDialog.OnClickListener onClickListener) {
+        this.onClickListener = onClickListener;
     }
 
-    public static void main(String[] args) {
-        GenerateJavaBeanDialog dialog = new GenerateJavaBeanDialog();
-        dialog.pack();
-        dialog.setVisible(true);
-        System.exit(0);
+    public void setCbSerializable(boolean select) {
+        this.cbSerializable.setSelected(select);
     }
-
 }

@@ -30,11 +30,11 @@
 
   <actions>
     <!-- Add your actions here -->
-    <action id="generateModelFieldFromString" class="actions.generateModelField.GenerateModelFieldAction" text="GenerateModelFieldFromString"
+    <action id="generateModelFieldFromString" class="actions.generateModelField.GenerateModelFieldAction" text="Generate Model Field From String"
             description="Generate Model Field From String">
       <add-to-group group-id="GenerateGroup" anchor="first"/>
     </action>
-    <action id="GenerateJavaBeanBySting" class="actions.generateJavaBean.GenerateJavaBeanAction" text="GenerateJavaBeanByString"
+    <action id="GenerateJavaBeanBySting" class="actions.generateJavaBean.GenerateJavaBeanAction" text="Generate Java Bean By String"
             description="GenerateJavaBeanByString">
       <add-to-group group-id="NewGroup" anchor="first"/>
     </action>

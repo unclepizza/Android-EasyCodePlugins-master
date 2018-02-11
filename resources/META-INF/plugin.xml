@@ -34,9 +34,9 @@
             description="Generate Model Field From String">
       <add-to-group group-id="GenerateGroup" anchor="first"/>
     </action>
-    <action id="GenerateJavaBeanBySting" class="actions.generageJavaBean.GenerateJavaBeanAction" text="GenerateJavaBeanBySting"
-            description="GenerateJavaBeanBySting">
-      <add-to-group group-id="EditMenu" anchor="first"/>
+    <action id="GenerateJavaBeanBySting" class="actions.generateJavaBean.GenerateJavaBeanAction" text="GenerateJavaBeanByString"
+            description="GenerateJavaBeanByString">
+      <add-to-group group-id="NewGroup" anchor="first"/>
     </action>
   </actions>
 

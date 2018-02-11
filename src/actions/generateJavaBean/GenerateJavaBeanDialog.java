@@ -7,8 +7,8 @@ public class GenerateJavaBeanDialog extends JDialog {
     private JButton btnCancel;
     private JPanel contentPane;
     private JButton btnGenerate;
-    private JTextField textField1;
-    private JTextField textField2;
+    private JTextField editPackage;
+    private JTextField editClassName;
     private JRadioButton rbPublic;
     private JRadioButton rbPrivate;
     private JTextArea txtPasteHere;
@@ -25,7 +25,8 @@ public class GenerateJavaBeanDialog extends JDialog {
 
         btnGenerate.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                onClickListener.onGenerate(txtPasteHere.getText(), memberType, serializable);
+                onClickListener.onGenerate(editClassName.getText(), editPackage.getText(), txtPasteHere.getText(),
+                        serializable, memberType);
                 dispose();
             }
         });
@@ -57,7 +58,7 @@ public class GenerateJavaBeanDialog extends JDialog {
     }
 
     public interface OnClickListener {
-        void onGenerate(String str, String member, boolean serializable);
+        void onGenerate(String className, String classPackage, String pasteStr, boolean serializable, String member);
 
         void onCancel();
     }

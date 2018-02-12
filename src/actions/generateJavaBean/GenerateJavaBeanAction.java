@@ -8,6 +8,7 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.wm.WindowManager;
+import com.intellij.psi.JavaDirectoryService;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import org.apache.http.util.TextUtils;
@@ -28,6 +29,9 @@ public class GenerateJavaBeanAction extends AnAction {
                 result = generateFile(classPackage, className, pasteStr, serializable, member);
             } catch (Exception e) {
                 result = e.getMessage();
+                if (TextUtils.isEmpty(result)) {
+                    result = e.toString();
+                }
             }
             if (!TextUtils.isEmpty(result)) {
                 Messages.showMessageDialog(result, "Error", Messages.getInformationIcon());
@@ -45,12 +49,14 @@ public class GenerateJavaBeanAction extends AnAction {
             return "";
         }
         //当前编辑的文件，可能为null
+        actionEvent.getProject();
         PsiFile psiFile = actionEvent.getData(LangDataKeys.PSI_FILE);
         Editor editor = actionEvent.getData(PlatformDataKeys.EDITOR);
         //当前工程
         Project project = editor.getProject();
         PsiElement element = psiFile.findElementAt(editor.getCaretModel().getOffset());
 
+        JavaDirectoryService directoryService = JavaDirectoryService.getInstance();
         return "";
     }
 

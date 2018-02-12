@@ -35,7 +35,7 @@ public class CodeWriter {
         //获取当前编辑的文件
         PsiFile psiFile = event.getData(LangDataKeys.PSI_FILE);
         if (psiFile == null) {
-            return "PsiFile can not be null";
+            return "当前编辑文件不能为空！";
         }
         final String[] resultMessage = {"success"};
         WriteCommandAction.runWriteCommandAction(event.getProject(), () -> {
@@ -46,13 +46,14 @@ public class CodeWriter {
             }
             Project project = editor.getProject();
             if (project == null) {
-                resultMessage[0] = "Project can not be null!";
+                resultMessage[0] = "当前工程不能为空！";
                 return;
             }
             //获取当前编辑的class对象
             PsiElement element = psiFile.findElementAt(editor.getCaretModel().getOffset());
             PsiClass psiClass = PsiTreeUtil.getParentOfType(element, PsiClass.class);
             if (psiClass == null) {
+                resultMessage[0] = "必须先新建class文件！";
                 return;
             }
             if (psiClass.getNameIdentifier() == null) {

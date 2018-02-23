@@ -1,5 +1,6 @@
 package actions.generateModelField;
 
+import actions.utils.CommonUtil;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.ui.Messages;
@@ -45,7 +46,7 @@ public class GenerateModelFieldAction extends AnAction {
     };
 
     private void generateModel(String str, String memberType, boolean isSerializable) {
-        List<List<String>> modelList = convertToList(str);
+        List<List<String>> modelList = CommonUtil.convertToList(str);
         String result = CodeWriter.getInstance().write(anActionEvent, modelList, memberType, isSerializable);
         //如果有错误信息，弹出来
         if (!TextUtils.isEmpty(result) && !result.equalsIgnoreCase("success")) {
@@ -53,26 +54,5 @@ public class GenerateModelFieldAction extends AnAction {
         }
     }
 
-    /**
-     * 把粘贴的字符串分行按空格转换成列表
-     */
-    @NotNull
-    private List<List<String>> convertToList(String str) {
-        List<List<String>> modelList = new ArrayList<>();
-        String[] lines = str.split("\n");
-        for (String singleLine : lines) {
-            if (TextUtils.isEmpty(singleLine)) {
-                continue;
-            }
-            String[] stringArr = singleLine.split("\t");
-            List<String> singleLineList = new ArrayList<>();
-            for (String s : stringArr) {
-                if (!TextUtils.isEmpty(s)) {
-                    singleLineList.add(s);
-                }
-            }
-            modelList.add(singleLineList);
-        }
-        return modelList;
-    }
+
 }

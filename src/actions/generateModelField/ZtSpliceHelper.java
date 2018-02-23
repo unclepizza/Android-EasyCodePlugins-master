@@ -20,6 +20,10 @@ public class ZtSpliceHelper implements ISpliceField {
     public void onSplice(List<List<String>> fields, Project project, PsiClass psiClass, boolean isSerializable,
                          String memberType) {
         this.mType = memberType;
+        if (psiClass == null) {
+            return;
+        }
+
         PsiElementFactory factory = JavaPsiFacade.getInstance(project).getElementFactory();
         ArrayList<PsiField> psiFields = new ArrayList<>();
         String ss = "private static final long serialVersionUID = 1L;";
@@ -47,10 +51,6 @@ public class ZtSpliceHelper implements ISpliceField {
             psiClass.add(field);
 
         }
-
-//        for (PsiField psiField : psiFields) {
-//            psiClass.add(psiField);
-//        }
     }
 
     private void appendAnnotation(List<String> strings, StringBuilder sb) {

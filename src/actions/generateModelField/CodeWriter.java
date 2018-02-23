@@ -8,6 +8,7 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 import com.intellij.psi.util.PsiTreeUtil;
+
 import java.util.List;
 
 /**
@@ -59,10 +60,13 @@ public class CodeWriter {
             if (psiClass.getNameIdentifier() == null) {
                 return;
             }
+            PsiReferenceList implementsList = psiClass.getImplementsList();
+
+            PsiElementFactory factory = JavaPsiFacade.getInstance(project).getElementFactory();
             try {
                 spliceHelper.onSplice(list, project, psiClass, isSerializable, type);
             } catch (Exception e) {
-                resultMessage[0] = e.getMessage();
+                resultMessage[0] = e.getMessage() + "\n" + "请检查复制的文本格式是否正确！";
             }
         });
         return resultMessage[0];
